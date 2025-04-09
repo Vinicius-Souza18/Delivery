@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delícia Express - Delivery</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #ff8e8e;
+            --dark-color: #333;
+            --light-color: #f5f5f5;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding-top: 56px; /* Espaço para navbar fixa */
+        }
+        
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+        
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        
+        .nav-link:hover {
+            color: #f8f9fa !important;
+        }
+        
+        .category-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin: 30px 0 20px;
+        }
+        
+        .card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .card-title {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .price {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #ff5252;
+            border-color: #ff5252;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .login-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 15px;
+        }
+        
+        .social-login-btn {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: left;
+            padding: 8px 15px;
+        }
+        
+        .social-login-btn i {
+            margin-right: 10px;
+        }
+        
+        .btn-google {
+            background-color: #DB4437;
+            color: white;
+        }
+        
+        .btn-facebook {
+            background-color: #4267B2;
+            color: white;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .divider::before {
+            margin-right: 10px;
+        }
+        
+        .divider::after {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Delícia Express</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#combos">Combos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#lanches">Lanches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#almoco">Almoço</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#bebidas">Bebidas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#mercado">Mercado</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link login-icon" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-user"></i> Entrar
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal de Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Acesse sua conta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Lembrar de mim</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" data-bs-dismiss="modal">Esqueci minha senha</a>
+                    </div>
+                    
+                    <div class="divider">ou</div>
+                    
+                    <button class="social-login-btn btn-google">
+                        <i class="fab fa-google"></i> Continuar com Google
+                    </button>
+                    <button class="social-login-btn btn-facebook">
+                        <i class="fab fa-facebook-f"></i> Continuar com Facebook
+                    </button>
+                    
+                    <div class="text-center mt-3">
+                        Não tem uma conta? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Cadastre-se</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Cadastro -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Criar nova conta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Nome completo</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPhone" class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" id="registerPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerConfirmPassword" class="form-label">Confirmar senha</label>
+                            <input type="password" class="form-control" id="registerConfirmPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="acceptTerms" required>
+                            <label class="form-check-label" for="acceptTerms">Aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
+                    </form>
+                    
+                    <div class="divider">ou</div>
+                    
+                    <button class="social-login-btn btn-google">
+                        <i class="fab fa-google"></i> Cadastrar com Google
+                    </button>
+                    <button class="social-login-btn btn-facebook">
+                        <i class="fab fa-facebook-f"></i> Cadastrar com Facebook
+                    </button>
+                    
+                    <div class="text-center mt-3">
+                        Já tem uma conta? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Faça login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Esqueci a Senha -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Recuperar senha</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Digite seu e-mail cadastrado para receber as instruções de recuperação de senha.</p>
+                    <form id="forgotPasswordForm">
+                        <div class="mb-3">
+                            <label for="forgotEmail" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="forgotEmail" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Enviar instruções</button>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Voltar para o login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Seu delivery rápido e saboroso!</h1>
+            <p class="lead">Entregamos em toda a região em até 40 minutos</p>
+            <a href="#combos" class="btn btn-primary btn-lg mt-3">Peça Agora</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Combos -->
+        <section id="combos">
+            <h2 class="category-title">Combos Especiais</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Combo Família">
+                        <div class="card-body">
+                            <h5 class="card-title">Combo Família</h5>
+                            <p class="card-text">2 hambúrgueres, 1 batata média, 1 refrigerante 1,5L</p>
+                            <p class="price">R$ 59,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Combo Casal">
+                        <div class="card-body">
+                            <h5 class="card-title">Combo Casal</h5>
+                            <p class="card-text">2 hambúrgueres, 1 batata pequena, 2 refrigerantes 350ml</p>
+                            <p class="price">R$ 39,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Combo Individual">
+                        <div class="card-body">
+                            <h5 class="card-title">Combo Individual</h5>
+                            <p class="card-text">1 hambúrguer, 1 batata pequena, 1 refrigerante 350ml</p>
+                            <p class="price">R$ 24,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Lanches -->
+        <section id="lanches">
+            <h2 class="category-title">Lanches</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="X-Burguer">
+                        <div class="card-body">
+                            <h5 class="card-title">X-Burguer</h5>
+                            <p class="card-text">Pão, hambúrguer, queijo, alface e tomate</p>
+                            <p class="price">R$ 14,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="X-Salada">
+                        <div class="card-body">
+                            <h5 class="card-title">X-Salada</h5>
+                            <p class="card-text">Pão, hambúrguer, queijo, presunto, alface e tomate</p>
+                            <p class="price">R$ 16,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1551615593-ef5fe247e8f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="X-Bacon">
+                        <div class="card-body">
+                            <h5 class="card-title">X-Bacon</h5>
+                            <p class="card-text">Pão, hambúrguer, queijo, bacon, alface e tomate</p>
+                            <p class="price">R$ 18,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1582196016295-f8c8bd4b3a99?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="X-Tudo">
+                        <div class="card-body">
+                            <h5 class="card-title">X-Tudo</h5>
+                            <p class="card-text">Pão, 2 hambúrgueres, queijo, presunto, bacon, ovo, alface e tomate</p>
+                            <p class="price">R$ 22,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Almoço -->
+        <section id="almoco">
+            <h2 class="category-title">Almoço</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Prato Feito">
+                        <div class="card-body">
+                            <h5 class="card-title">Prato Feito</h5>
+                            <p class="card-text">Arroz, feijão, bife, batata frita e salada</p>
+                            <p class="price">R$ 25,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1518492104633-130d0cc84637?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Frango Grelhado">
+                        <div class="card-body">
+                            <h5 class="card-title">Frango Grelhado</h5>
+                            <p class="card-text">Arroz, feijão, frango grelhado, legumes e salada</p>
+                            <p class="price">R$ 27,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Peixe Assado">
+                        <div class="card-body">
+                            <h5 class="card-title">Peixe Assado</h5>
+                            <p class="card-text">Arroz, feijão, peixe assado, purê de batata e salada</p>
+                            <p class="price">R$ 32,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Vegetariano">
+                        <div class="card-body">
+                            <h5 class="card-title">Vegetariano</h5>
+                            <p class="card-text">Arroz integral, lentilha, legumes grelhados e salada</p>
+                            <p class="price">R$ 23,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Bebidas -->
+        <section id="bebidas">
+            <h2 class="category-title">Bebidas</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Refrigerante 350ml">
+                        <div class="card-body">
+                            <h5 class="card-title">Refrigerante 350ml</h5>
+                            <p class="card-text">Coca-Cola, Guaraná, Fanta, etc.</p>
+                            <p class="price">R$ 5,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1624552184280-9e9631bbeee9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Refrigerante 1,5L">
+                        <div class="card-body">
+                            <h5 class="card-title">Refrigerante 1,5L</h5>
+                            <p class="card-text">Coca-Cola, Guaraná, Fanta, etc.</p>
+                            <p class="price">R$ 10,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Suco Natural">
+                        <div class="card-body">
+                            <h5 class="card-title">Suco Natural 500ml</h5>
+                            <p class="card-text">Laranja, Abacaxi, Maracujá, etc.</p>
+                            <p class="price">R$ 8,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Água Mineral">
+                        <div class="card-body">
+                            <h5 class="card-title">Água Mineral 500ml</h5>
+                            <p class="card-text">Água com ou sem gás</p>
+                            <p class="price">R$ 3,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mercado -->
+        <section id="mercado">
+            <h2 class="category-title">Mercado</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Pão de Forma">
+                        <div class="card-body">
+                            <h5 class="card-title">Pão de Forma</h5>
+                            <p class="card-text">Pão de forma integral 500g</p>
+                            <p class="price">R$ 8,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Leite">
+                        <div class="card-body">
+                            <h5 class="card-title">Leite 1L</h5>
+                            <p class="card-text">Leite integral longa vida</p>
+                            <p class="price">R$ 4,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Ovos">
+                        <div class="card-body">
+                            <h5 class="card-title">Ovos 12un</h5>
+                            <p class="card-text">Ovos brancos ou vermelhos</p>
+                            <p class="price">R$ 12,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Arroz">
+                        <div class="card-body">
+                            <h5 class="card-title">Arroz 5kg</h5>
+                            <p class="card-text">Arroz branco tipo 1</p>
+                            <p class="price">R$ 22,90</p>
+                            <button class="btn btn-primary w-100">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Delícia Express</h5>
+                    <p>Seu delivery rápido e saboroso!</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contato</h5>
+                    <p>Telefone: (11) 1234-5678</p>
+                    <p>WhatsApp: (11) 98765-4321</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Horário</h5>
+                    <p>Seg-Sex: 10h-22h</p>
+                    <p>Sáb-Dom: 11h-23h</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <p>&copy; 2023 Delícia Express - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Validação básica do formulário de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Validação simples - na prática, você faria uma chamada ao servidor
+            if(email && password) {
+                alert('Login realizado com sucesso!');
+                // Fechar o modal
+                var modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                modal.hide();
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        });
+        
+        // Validação do formulário de cadastro
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            const acceptTerms = document.getElementById('acceptTerms').checked;
+            
+            if(password !== confirmPassword) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+            
+            if(!acceptTerms) {
+                alert('Você deve aceitar os termos de uso para se cadastrar.');
+                return;
+            }
+            
+            if(name && email && phone && password && confirmPassword) {
+                alert('Cadastro realizado com sucesso!');
+                // Fechar o modal
+                var modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                modal.hide();
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        });
+        
+        // Validação do formulário de recuperação de senha
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('forgotEmail').value;
+            
+            if(email) {
+                alert('Instruções de recuperação enviadas para o e-mail informado.');
+                // Fechar o modal
+                var modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+                modal.hide();
+            } else {
+                alert('Por favor, informe seu e-mail cadastrado.');
+            }
+        });
+    </script>
+</body>
+</html>
